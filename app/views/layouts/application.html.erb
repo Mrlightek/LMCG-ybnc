@@ -1,0 +1,51 @@
+<%# ═══════════════════════════════════════════════════════════════
+    app/views/layouts/application.html.erb
+    ═══════════════════════════════════════════════════════════════ %>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="<%= yield(:meta_desc) || 'Young Black Nameless Coalition — Fostering unity, dismantling systemic barriers, and amplifying Black voices. Led by Ashley Dorelus. Vallejo, CA.' %>">
+  <meta property="og:title" content="<%= content_for?(:title) ? "#{yield :title} — " : "" %>YBNC · Young Black Nameless Coalition">
+  <meta property="og:image" content="<%= image_url('https://upload.wikimedia.org/wikipedia/commons/5/56/Flag_of_Haiti.svg') %>">
+  <meta name="theme-color" content="#B91C1C">
+
+  <title><%= content_for?(:title) ? "#{yield :title} — " : "" %>YBNC</title>
+
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  
+  <%= javascript_importmap_tags %>
+</head>
+
+<body class="<%= controller_name %> action-<%= action_name %>">
+  <a href="#main-content" class="sr-only">Skip to main content</a>
+
+  <%= render "shared/nav" %>
+
+  <main id="main-content">
+    <% if flash[:notice] %>
+      <div class="toast-container">
+        <%= render "shared/toast", message: flash[:notice], type: "success" %>
+      </div>
+    <% end %>
+    <% if flash[:alert] %>
+      <div class="toast-container">
+        <%= render "shared/toast", message: flash[:alert], type: "error" %>
+      </div>
+    <% end %>
+
+    <%= yield %>
+  </main>
+
+  <%= render "shared/footer" %>
+
+  <div class="toast-container" id="toastContainer" aria-live="polite"></div>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<%# ═══════════════════════════════════════════════════════════════
+    app/views/newsletter_subscriptions/_form.html.erb
+    locals: sub (NewsletterSubscription)
+    ═══════════════════════════════════════════════════════════════ %>
+
+<%= form_with model: sub,
+      url: newsletter_subscriptions_path,
+      id: "newsletter_form",
+      class: "newsletter__form",
+      data: { controller: "newsletter-form", turbo: true } do |f| %>
+
+  <% if sub.errors.any? %>
+    <div class="form-error" role="alert">
+      <%= sub.errors.full_messages.to_sentence %>
+    </div>
+  <% end %>
+
+  <%= f.hidden_field :source, value: local_assigns[:source] || "home" %>
+
+  <%= f.email_field :email,
+        class: "newsletter__input",
+        placeholder: "Your email address",
+        required: true,
+        autocomplete: "email",
+        "aria-label": "Email address" %>
+
+  <%= f.submit "Join YBNC →",
+        class: "newsletter__submit",
+        data: { disable_with: "Joining..." } %>
+<% end %>

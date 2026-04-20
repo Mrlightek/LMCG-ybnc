@@ -1,0 +1,12 @@
+<%# ═══════════════════════════════════════════════════════════════
+    app/views/shared/_toast.html.erb
+    locals: message (String), type (String: success|error|info)
+    ═══════════════════════════════════════════════════════════════ %>
+
+<div class="toast toast--<%= type %>"
+     role="alert"
+     aria-live="polite"
+     data-controller="toast">
+  <span aria-hidden="true"><%= type == "success" ? "✊🏾" : "⚠" %></span>
+  <span><%= message %></span>
+</div>

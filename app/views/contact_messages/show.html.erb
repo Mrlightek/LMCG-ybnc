@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @contact_message %>
+
+<div>
+  <%= link_to "Edit this contact message", edit_contact_message_path(@contact_message) %> |
+  <%= link_to "Back to contact messages", contact_messages_path %>
+
+  <%= button_to "Destroy this contact message", @contact_message, method: :delete %>
+</div>

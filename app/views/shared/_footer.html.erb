@@ -1,0 +1,283 @@
+<%# ═══════════════════════════════════════════════════════════════
+    app/views/shared/_footer.html.erb
+    ═══════════════════════════════════════════════════════════════ %>
+  
+<footer class="footer" role="contentinfo">
+  <div class="container">
+    <div class="footer__top">
+      <div>
+        <div class="footer__brand-abbr">YBNC</div>
+        <div class="footer__brand-full">Young Black Nameless Coalition</div>
+        <p class="footer__tagline">
+          "Named by the unnamed. Built for the unseen. Fighting for the liberation of all Black people."
+        </p>
+        <div class="footer__social" aria-label="Social media">
+          <%= link_to "📸", "https://www.instagram.com/aestheticsconash/",
+                class: "footer__social-link", title: "Instagram",
+                target: "_blank", rel: "noopener noreferrer",
+                "aria-label": "Instagram" %>
+          <%= link_to "💼", "https://www.linkedin.com/in/young-black-nameless-coalition-7571ab303",
+                class: "footer__social-link", title: "LinkedIn",
+                target: "_blank", rel: "noopener noreferrer",
+                "aria-label": "LinkedIn" %>
+          <%= link_to "🎥", "https://www.instagram.com/reels/CzT9_pXpOER/",
+                class: "footer__social-link", title: "Documentary Reel",
+                target: "_blank", rel: "noopener noreferrer",
+                "aria-label": "Watch our documentary reel" %>
+        </div>
+      </div>
+
+      <div>
+        <div class="footer__col-title">Organization</div>
+        <ul class="footer__links">
+          <li><%= link_to "Mission",      mission_path,  class: "footer__link" %></li>
+          <li><%= link_to "Focus Areas",  focus_path,    class: "footer__link" %></li>
+          <li><%= link_to "About Ashley", about_path,    class: "footer__link" %></li>
+          <li><%= link_to "Events",       events_path,   class: "footer__link" %></li>
+          <li><%= link_to "Resources",    resources_path,class: "footer__link" %></li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="footer__col-title">Take Action</div>
+        <ul class="footer__links">
+          <li><%= link_to "Join the Coalition", "#newsletter", class: "footer__link" %></li>
+          <li><%= link_to "Donate",             donate_path,   class: "footer__link" %></li>
+          <li><%= link_to "Volunteer",          volunteer_applications_path, class: "footer__link" %></li>
+          <li><%= link_to "Newsletter",         "#newsletter", class: "footer__link" %></li>
+          <li><%= link_to "Partnerships",       contact_path,  class: "footer__link" %></li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="footer__col-title">Contact</div>
+        <ul class="footer__links">
+          <li><a href="https://www.instagram.com/aestheticsconash/" target="_blank" rel="noopener noreferrer" class="footer__link">@aestheticsconash</a></li>
+          <li><span class="footer__link" style="cursor:default;">Vallejo, CA 94589</span></li>
+        </ul>
+        <div style="margin-top: var(--sp-6);">
+          <%= link_to "Join Now →", "#newsletter", class: "btn btn--red btn--sm" %>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer__bottom">
+      <span>© <%= Date.today.year %> Young Black Nameless Coalition, Inc. · Vallejo, California</span>
+      <span>Founded by Ashley Dorelus · All power to the people · ✊🏾</span>
+    </div>
+  </div>
+
+  <style>
+/* ═══════════════════════════════════════════════════════════════
+   YBNC — Design System
+   Aesthetic: Movement Editorial · Black Arts · Liberation Press
+   "Named by the unnamed. Built for the unseen."
+   ═══════════════════════════════════════════════════════════════ */
+
+:root {
+  /* ── Color System ── */
+  --black:       #0A0A0A;
+  --charcoal:    #141414;
+  --dark:        #1C1C1C;
+  --dark-mid:    #262626;
+  --border:      #2E2E2E;
+  --border-lit:  #3D3D3D;
+
+  --red:         #B91C1C;   /* liberation red — urgent, alive */
+  --red-deep:    #991818;
+  --red-glow:    rgba(185,28,28,0.12);
+
+  --gold:        #C9A84C;   /* Black excellence, Afrocentric royalty */
+  --gold-lite:   #E0C278;
+  --gold-mist:   rgba(201,168,76,0.1);
+
+  --cream:       #F5F0E8;   /* newspaper, warm, human */
+  --cream-dark:  #DDD5C4;
+  --white:       #FAFAF8;
+
+  --text-primary:   #F5F0E8;
+  --text-secondary: #9A9488;
+  --text-muted:     #5C5650;
+  --text-on-red:    #FFFFFF;
+  --text-on-gold:   #0A0A0A;
+  --text-on-cream:  #0A0A0A;
+
+  /* ── Typography ── */
+  --font-display: 'Syne', sans-serif;
+  --font-body:    'Source Serif 4', Georgia, serif;
+  --font-mono:    'DM Mono', monospace;
+
+  /* ── Spacing ── */
+  --sp-1:  0.25rem;
+  --sp-2:  0.5rem;
+  --sp-3:  0.75rem;
+  --sp-4:  1rem;
+  --sp-6:  1.5rem;
+  --sp-8:  2rem;
+  --sp-12: 3rem;
+  --sp-16: 4rem;
+  --sp-20: 5rem;
+  --sp-24: 6rem;
+  --sp-32: 8rem;
+
+  /* ── Sharp geometry ── */
+  --r: 0px;
+  --r-sm: 2px;
+
+  /* ── Motion ── */
+  --t-fast: 0.15s ease;
+  --t-base: 0.3s ease;
+  --t-slow: 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   BUTTONS
+   ═══════════════════════════════════════════════════════════════ */
+
+.btn {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  font-family: var(--font-display); font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  border: none; border-radius: 0; cursor: pointer;
+  transition: all var(--t-base);
+  padding: 0.8rem 2rem; font-size: 0.85rem;
+  white-space: nowrap;
+}
+.btn--sm { padding: 0.55rem 1.25rem; font-size: 0.78rem; }
+.btn--lg { padding: 1rem 2.5rem;    font-size: 0.92rem; }
+.btn--xl { padding: 1.2rem 3rem;    font-size: 1rem; }
+.btn--block { width: 100%; justify-content: center; }
+
+.btn--red {
+  background: var(--red); color: white;
+}
+.btn--red:hover { background: var(--red-deep); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(185,28,28,0.35); }
+
+.btn--gold {
+  background: var(--gold); color: var(--text-on-gold);
+}
+.btn--gold:hover { background: var(--gold-lite); transform: translateY(-2px); }
+
+.btn--outline {
+  background: transparent; color: var(--cream);
+  border: 1px solid var(--border-lit);
+}
+.btn--outline:hover { border-color: var(--gold); color: var(--gold); background: var(--gold-mist); }
+
+.btn--outline-dark {
+  background: transparent; color: var(--black);
+  border: 1.5px solid rgba(0,0,0,0.25);
+}
+.btn--outline-dark:hover { border-color: var(--red); color: var(--red); }
+
+.btn__arr { transition: transform var(--t-base); }
+.btn:hover .btn__arr { transform: translateX(4px); }
+
+
+/* ═══════════════════════════════════════════════════════════════
+   FOOTER
+   ═══════════════════════════════════════════════════════════════ */
+
+.footer {
+  background: var(--charcoal);
+  border-top: 1px solid var(--border);
+  padding: var(--sp-16) 0 var(--sp-8);
+}
+
+.footer__top {
+  display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 4rem; padding-bottom: var(--sp-12);
+  border-bottom: 1px solid var(--border);
+  margin-bottom: var(--sp-6);
+}
+
+.footer__brand-abbr {
+  font-family: var(--font-display); font-size: 2rem; font-weight: 900;
+  letter-spacing: 0.04em; color: var(--cream); margin-bottom: 0.2rem;
+}
+.footer__brand-full {
+  font-family: var(--font-mono); font-size: 0.58rem;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--text-muted); margin-bottom: var(--sp-4);
+}
+.footer__tagline {
+  font-family: var(--font-body); font-style: italic;
+  font-size: 0.92rem; font-weight: 300;
+  color: var(--text-secondary); line-height: 1.7;
+  max-width: 260px; margin-bottom: var(--sp-6);
+}
+.footer__social { display: flex; gap: 0.6rem; }
+.footer__social-link {
+  width: 36px; height: 36px;
+  border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.85rem; color: var(--text-muted);
+  transition: all var(--t-fast);
+}
+.footer__social-link:hover { border-color: var(--gold); color: var(--gold); background: var(--gold-mist); }
+
+.footer__col-title {
+  font-family: var(--font-mono); font-size: 0.62rem;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: var(--sp-5);
+}
+.footer__links { display: flex; flex-direction: column; gap: 0.6rem; }
+.footer__link {
+  font-size: 0.88rem; font-weight: 300;
+  color: var(--text-muted); transition: color var(--t-fast);
+}
+.footer__link:hover { color: var(--cream); }
+
+.footer__bottom {
+  display: flex; align-items: center; justify-content: space-between;
+  font-family: var(--font-mono); font-size: 0.62rem;
+  letter-spacing: 0.1em; color: var(--text-muted);
+  flex-wrap: wrap; gap: 0.5rem;
+}
+
+/* ── Accessibility ── */
+:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}
+.sr-only {
+  position: absolute; width: 1px; height: 1px;
+  overflow: hidden; clip: rect(0,0,0,0);
+  white-space: nowrap;
+}
+
+/* ── Responsive ── */
+@media (max-width: 1100px) {
+  .focus__grid { display: grid; grid-template-columns: 1fr 1fr; }
+  .focus-card { grid-column: auto !important; }
+  .impact__grid { grid-template-columns: repeat(2,1fr); }
+  .footer__top  { grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+}
+
+@media (max-width: 768px) {
+  .container { padding: 0 1.25rem; }
+  .nav { padding: 1rem 1.25rem; }
+  .nav.scrolled { padding: 0.75rem 1.25rem; }
+  .nav__links { display: none; }
+  .nav__ham   { display: flex; }
+  .hero__title { font-size: clamp(3.5rem, 15vw, 8rem); }
+  .hero__bottom { flex-direction: column; gap: 1.5rem; }
+  .hero__stripe, .hero__stripe-gold { left: 1.5rem; }
+  .mission__grid { grid-template-columns: 1fr; gap: 3rem; }
+  .mission__label-col { flex-direction: row; align-items: center; }
+  .mission__counter { font-size: 3rem; }
+  .mission__side-text { display: none; }
+  .about__grid { grid-template-columns: 1fr; }
+  .about__image-col { min-height: 300px; }
+  .about__content { padding: 2.5rem 1.5rem; }
+  .involved__grid { grid-template-columns: 1fr; }
+  .focus__grid { grid-template-columns: 1fr; }
+  .impact__grid { grid-template-columns: repeat(2,1fr); }
+  .footer__top  { grid-template-columns: 1fr; gap: 2rem; }
+  .footer__bottom { flex-direction: column; gap: 0.4rem; }
+  .newsletter__form { flex-direction: column; }
+  .newsletter__submit { padding: 1rem; }
+  .hero__footer-bar { flex-direction: column; gap: 0.4rem; text-align: center; }
+}
+</style>
+</footer>

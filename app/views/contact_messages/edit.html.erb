@@ -1,0 +1,12 @@
+<% content_for :title, "Editing contact message" %>
+
+<h1>Editing contact message</h1>
+
+<%= render "form", contact_message: @contact_message %>
+
+<br>
+
+<div>
+  <%= link_to "Show this contact message", @contact_message %> |
+  <%= link_to "Back to contact messages", contact_messages_path %>
+</div>

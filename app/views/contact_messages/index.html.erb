@@ -1,0 +1,16 @@
+<p style="color: green"><%= notice %></p>
+
+<% content_for :title, "Contact messages" %>
+
+<h1>Contact messages</h1>
+
+<div id="contact_messages">
+  <% @contact_messages.each do |contact_message| %>
+    <%= render contact_message %>
+    <p>
+      <%= link_to "Show this contact message", contact_message %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New contact message", new_contact_message_path %>

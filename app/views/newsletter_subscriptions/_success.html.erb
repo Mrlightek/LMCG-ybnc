@@ -1,0 +1,13 @@
+<%# ═══════════════════════════════════════════════════════════════
+    app/views/newsletter_subscriptions/_success.html.erb
+    ═══════════════════════════════════════════════════════════════ %>
+
+<div id="newsletter_form" style="text-align:center;padding:2rem 0;" role="status">
+  <div style="font-size:2rem;margin-bottom:1rem;">✊🏾</div>
+  <p style="font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--black);margin-bottom:.5rem;">
+    You're in<%= ", #{name}" if name.present? %>.
+  </p>
+  <p style="font-size:.9rem;color:rgba(0,0,0,.5);font-style:italic;">
+    See you on the frontlines.
+  </p>
+</div>

@@ -1,0 +1,11 @@
+<% content_for :title, "New contact message" %>
+
+<h1>New contact message</h1>
+
+<%= render "form", contact_message: @contact_message %>
+
+<br>
+
+<div>
+  <%= link_to "Back to contact messages", contact_messages_path %>
+</div>
