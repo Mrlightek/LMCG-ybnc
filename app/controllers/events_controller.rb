@@ -1,5 +1,6 @@
 class EventsController < ApplicationController
   # before_action :set_event, only: %i[ show edit update destroy ]
+  allow_unauthenticated_access only: %i[ index]
 
   # GET /events or /events.json
   def index

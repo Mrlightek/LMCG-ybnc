@@ -1,5 +1,6 @@
 class LandingPagesController < ApplicationController
   before_action :set_landing_page, only: %i[ show edit update destroy ]
+  allow_unauthenticated_access only: %i[ index show ]
 
   # GET /landing_pages or /landing_pages.json
   def index

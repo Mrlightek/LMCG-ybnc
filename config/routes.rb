@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   resource :session
   resources :passwords, param: :token
   resources :dashboards
+  resources :pages
   root "landing_pages#index"
 
   # Public pages
