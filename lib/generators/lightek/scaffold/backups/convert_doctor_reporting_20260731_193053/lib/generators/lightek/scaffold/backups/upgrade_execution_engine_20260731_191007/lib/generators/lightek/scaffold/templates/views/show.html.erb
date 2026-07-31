@@ -1,0 +1,8 @@
+<h1><%= class_name %></h1>
+
+<% attributes.each do |attribute| %>
+<p>
+  <strong><%= attribute.human_name %>:</strong>
+  <%%= @<%= file_name %>.<%= attribute.name %> %>
+</p>
+<% end %>

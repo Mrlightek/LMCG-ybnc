@@ -357,8 +357,8 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
     <div class="tb-user">
       <div class="tb-avatar" id="tbAvatar">AD</div>
       <div>
-        <div class="tb-user-name" id="tbName">Ashley Dorelus</div>
-        <div class="tb-user-role role-admin" id="tbRole">Admin · Founder</div>
+        <div class="tb-user-name" id="tbName"><%=@current_user.first_name%> <%=@current_user.last_name%></div>
+        <div class="tb-user-role role-admin" id="tbRole"><%=@current_user.role%> · <%=@current_user.title%> </div>
       </div>
     </div>
   </div>
@@ -375,7 +375,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
       </div>
       <div class="nav-item" onclick="goPanel('members',this)">
         <span class="nav-icon">✊</span> Members
-        <span class="nav-badge">248</span>
+        <span class="nav-badge"><%=@users.count%></span>
       </div>
       <div class="nav-item" onclick="goPanel('events',this)">
         <span class="nav-icon">📅</span> Events
@@ -475,7 +475,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
   <div class="metrics">
     <div class="metric m-red">
       <div class="metric-label">Total Members</div>
-      <div class="metric-val red">248</div>
+      <div class="metric-val red"><%=@users.count%></div>
       <div class="metric-sub">Active coalition members</div>
       <div class="metric-delta delta-up">↑ 14 this month</div>
     </div>
@@ -623,8 +623,9 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
         </tr>
       </thead>
       <tbody>
+      <% @users.each do |user| %>
         <tr>
-          <td><div style="display:flex;align-items:center;gap:.6rem"><div class="avatar avatar-red">AD</div><div><div class="tbl-name">Ashley Dorelus</div><div class="tbl-sub">Founder · @aestheticsconash</div></div></div></td>
+          <td><div style="display:flex;align-items:center;gap:.6rem"><div class="avatar avatar-red"><%= "#{user.first_name.to_s.first}#{user.last_name.to_s.first}" %></div><div><div class="tbl-name"><%=user&.first_name%> <%=user&.last_name%></div><div class="tbl-sub"><%=user&.title%> · @<%=user&.email_address%></div></div></div></td>
           <td style="font-family:var(--fm);font-size:.7rem;color:var(--text-sec)">Vallejo, CA</td>
           <td><div class="skills-list"><span class="skill-tag">Organizing</span><span class="skill-tag">Advocacy</span></div></td>
           <td style="font-family:var(--fm);font-size:.68rem;color:var(--text-muted)">Founder</td>
@@ -632,6 +633,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
           <td><span class="tag tag-active">Active</span></td>
           <td><button class="btn btn-ghost btn-sm">Edit</button></td>
         </tr>
+        <%end%>
         <tr>
           <td><div style="display:flex;align-items:center;gap:.6rem"><div class="avatar">MT</div><div><div class="tbl-name">Marcus Thompson</div><div class="tbl-sub">marcus.t@email.com</div></div></div></td>
           <td style="font-family:var(--fm);font-size:.7rem;color:var(--text-sec)">Vallejo, CA</td>

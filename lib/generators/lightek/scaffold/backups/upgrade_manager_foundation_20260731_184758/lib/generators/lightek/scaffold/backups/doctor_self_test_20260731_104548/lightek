@@ -1,0 +1,104 @@
+#!/usr/bin/env ruby
+
+ENV["RAILS_ENV"] ||= "development"
+
+require_relative "../config/environment"
+
+require_relative "../lib/lightek"
+
+
+puts
+puts "======================================"
+puts "       Lightek Doctor"
+puts "======================================"
+puts
+
+validator =
+  Lightek::Contracts::Validator
+
+errors = 0
+warnings = 0
+all_issues = []
+
+ApplicationRecord.descendants
+  .reject(&:abstract_class?)
+  .sort_by(&:name)
+  .each do |model|
+
+    puts "Inspecting #{model.name}..."
+
+    begin
+
+      doctor =
+        validator.new(model.name)
+
+      doctor.validate
+
+      issues =
+        doctor.issues
+
+      all_issues.concat(issues)
+
+      issues.each do |issue|
+
+        case issue.level
+
+        when :error
+          errors += 1
+
+        when :warning
+          warnings += 1
+
+        end
+
+      end
+
+    rescue => e
+
+      errors += 1
+
+      puts
+      puts "[ERROR]"
+      puts "#{model.name}"
+      puts e.message
+      puts
+
+    end
+
+    puts
+
+  end
+
+result = {
+  errors: errors,
+  warnings: warnings,
+  issues: all_issues.map do |issue|
+
+    {
+      analyzer: issue.analyzer,
+      level: issue.level,
+      message: issue.message,
+      file: issue.file,
+      line: issue.line
+    }
+
+  end
+}
+
+reporter =
+  case ARGV.first
+
+  when "--json"
+    Lightek::Reporting::JsonReporter.new
+
+  when "--ci"
+    Lightek::Reporting::CiReporter.new
+
+  else
+    Lightek::Reporting::ConsoleReporter.new
+
+  end
+
+reporter.report(result)
+
+exit 1 unless errors.zero?

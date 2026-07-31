@@ -28,7 +28,32 @@ class VolunteerApplication < ApplicationRecord
 
   def set_defaults
     self.status ||= "pending"
+  
+
+  after_create_commit :trigger_create_job
+  after_update_commit :trigger_update_job
+  after_destroy_commit :trigger_destroy_job
+
+
+  private
+
+
+  def trigger_create_job
+    volunteer_applicationCreateJob.perform_later(id)
   end
+
+
+  def trigger_update_job
+    volunteer_applicationUpdateJob.perform_later(id)
+  end
+
+
+  def trigger_destroy_job
+    volunteer_applicationDestroyJob.perform_later(id)
+  end
+
+
+end
 
   def send_confirmation
     VolunteerMailer.application_received(self).deliver_later

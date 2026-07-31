@@ -1,0 +1,4 @@
+class Donation < ApplicationRecord
+  belongs_to :user
+  enum :method, { paypal: 0, bank: 1, check: 2, cashapp: 3 }
+end

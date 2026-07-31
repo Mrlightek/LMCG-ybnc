@@ -1,0 +1,33 @@
+class Article < ApplicationRecord
+
+
+  after_create_commit :trigger_create_job
+  after_update_commit :trigger_update_job
+  after_destroy_commit :trigger_destroy_job
+
+
+  private
+
+
+  def trigger_create_job
+    articleCreateJob.perform_later(id)
+  end
+
+
+  def trigger_update_job
+    articleUpdateJob.perform_later(id)
+  end
+
+
+  def trigger_destroy_job
+    articleDestroyJob.perform_later(id)
+  end
+
+
+
+
+  def to_param
+    slug
+  end
+
+end

@@ -19,4 +19,10 @@ class Initiative < ApplicationRecord
   scope :featured,  -> { where(featured: true) }
 
   def active? = %w[active ongoing].include?(status)
+
+
+  def to_param
+    slug
+  end
+
 end

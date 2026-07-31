@@ -14,7 +14,7 @@ class EventsController < ApplicationController
   end
 
   def show
-    @event = Event.published.find_by!(slug: params[:id])
+    @event = Event.published.find_by!(slug: params[:slug])
     @other_events = Event.published.upcoming
                       .where.not(id: @event.id).limit(3)
   end

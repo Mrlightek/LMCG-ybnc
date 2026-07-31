@@ -1,0 +1,133 @@
+require "rails/generators"
+
+module Lightek
+  module Generators
+    class ScaffoldGenerator < Rails::Generators::NamedBase
+
+      source_root File.expand_path("templates", __dir__)
+
+      argument :attributes,
+        type: :array,
+        default: [],
+        banner: "field:type field:type"
+
+
+      def create_model
+        template(
+          "model.rb",
+          "app/models/#{file_name}.rb"
+        )
+      end
+
+
+      def create_services
+        %w[create update destroy].each do |action|
+          template(
+            "service.rb",
+            "app/services/#{file_name}_#{action}_service.rb",
+            { action: action }
+          )
+        end
+      end
+
+
+      def create_jobs
+        %w[create update destroy].each do |action|
+          template(
+            "job.rb",
+            "app/jobs/#{file_name}_#{action}_job.rb",
+            { action: action }
+          )
+        end
+      end
+
+
+      def create_mailer
+        template(
+          "mailer.rb",
+          "app/mailers/#{file_name}_mailer.rb"
+        )
+      end
+
+
+      def create_notification
+        template(
+          "notification.rb",
+          "app/notifications/#{file_name}_notification.rb"
+        )
+      end
+
+
+      def create_event
+        template(
+          "event.rb",
+          "app/events/#{file_name}_event.rb"
+        )
+      end
+
+
+      def create_controller
+        template(
+          "controller.rb",
+          "app/controllers/#{plural_name}_controller.rb"
+        )
+      end
+
+
+
+      def create_seed
+        template(
+          "seeds.rb",
+          "db/seeds/#{plural_name}_seeds.rb"
+        )
+
+        append_to_file "db/seeds.rb",
+          "\nrequire_relative \"seeds/#{plural_name}_seeds\"\n"
+      end
+\n      def create_views
+        directory(
+          "views",
+          "app/views/#{plural_name}"
+        )
+      end
+
+    end
+  end
+
+
+      private
+
+      def attribute_value(attribute)
+
+        case attribute.type.to_sym
+
+        when :string
+          ""Example #{attribute.name}""
+
+        when :text
+          ""Example text for #{attribute.name}""
+
+        when :integer
+          "rand(1..100)"
+
+        when :decimal
+          "rand(10.0..500.0).round(2)"
+
+        when :float
+          "rand(1.0..100.0)"
+
+        when :boolean
+          "true"
+
+        when :references
+          "#{attribute.name.camelize}.first"
+
+        else
+          "nil"
+
+        end
+
+      end
+
+
+end

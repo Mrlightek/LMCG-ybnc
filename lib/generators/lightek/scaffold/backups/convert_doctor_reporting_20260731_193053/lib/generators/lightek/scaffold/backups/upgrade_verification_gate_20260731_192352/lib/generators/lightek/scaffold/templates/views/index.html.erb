@@ -1,0 +1,9 @@
+<h1><%= plural_name.humanize %></h1>
+
+<%% @<%= plural_name %>.each do |<%= file_name %>| %>
+
+  <div>
+    <%%= link_to <%= file_name %>.id, <%= file_name %> %>
+  </div>
+
+<%% end %>

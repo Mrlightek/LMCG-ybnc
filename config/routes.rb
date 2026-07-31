@@ -7,6 +7,9 @@
 # ── config/routes.rb ────────────────────────────────────────────
 
 Rails.application.routes.draw do
+  resources :donations
+  resources :articles, param: :slug
+  resources :skills
   resource :session
   resources :passwords, param: :token
   resources :dashboards
@@ -23,15 +26,15 @@ Rails.application.routes.draw do
   get "/donate",      to: "pages#donate",       as: :donate
 
   # Events
-  resources :events, only: [:index, :show] do
-    collection { get :past }
-  end
+resources :events, param: :slug, only: [:index, :show] do
+  collection { get :past }
+end
 
   # Initiatives / campaigns
-  resources :initiatives, only: [:index, :show]
+  resources :initiatives, param: :slug, only: [:index, :show]
 
   # Resources library
-  resources :resource_items, only: [:index], path: "library"
+  resources :resource_items, param: :slug, only: [:index], path: "library"
 
   # Member-facing actions
   resources :newsletter_subscriptions, only: [:create], path: "subscribe"
@@ -39,10 +42,13 @@ Rails.application.routes.draw do
   resources :contact_messages,         only: [:create], path: "contact"
   resources :donation_intents,         only: [:create], path: "donate"
 
+  #Dashboard
+  get "admin", to: "dashboards#index"
+
   # Admin (protect with simple HTTP auth or Devise in production)
   namespace :admin do
     root "dashboard#index"
-    resources :events
+    resources :events, param: :slug
     resources :initiatives
     resources :resources, as: :resource_items, controller: :resources
     resources :members do

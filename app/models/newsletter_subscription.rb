@@ -13,7 +13,32 @@ class NewsletterSubscription < ApplicationRecord
 
   def unsubscribe!
     update!(status: "unsubscribed", unsubscribed_at: Time.current)
+  
+
+  after_create_commit :trigger_create_job
+  after_update_commit :trigger_update_job
+  after_destroy_commit :trigger_destroy_job
+
+
+  private
+
+
+  def trigger_create_job
+    newsletter_subscriptionCreateJob.perform_later(id)
   end
+
+
+  def trigger_update_job
+    newsletter_subscriptionUpdateJob.perform_later(id)
+  end
+
+
+  def trigger_destroy_job
+    newsletter_subscriptionDestroyJob.perform_later(id)
+  end
+
+
+end
 
   private
 

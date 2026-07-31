@@ -22,7 +22,32 @@ class ContactMessage < ApplicationRecord
   def set_defaults
     self.read ||= false
     self.inquiry_type ||= "general"
+  
+
+  after_create_commit :trigger_create_job
+  after_update_commit :trigger_update_job
+  after_destroy_commit :trigger_destroy_job
+
+
+  private
+
+
+  def trigger_create_job
+    contact_messageCreateJob.perform_later(id)
   end
+
+
+  def trigger_update_job
+    contact_messageUpdateJob.perform_later(id)
+  end
+
+
+  def trigger_destroy_job
+    contact_messageDestroyJob.perform_later(id)
+  end
+
+
+end
 
   def send_notifications
     ContactMailer.auto_reply(self).deliver_later

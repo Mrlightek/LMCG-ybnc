@@ -1,10 +1,55 @@
-<p style="color: green"><%= notice %></p>
+<% content_for :title, @event.title %>
 
-<%= render @event %>
+<article class="event">
 
-<div>
-  <%= link_to "Edit this event", edit_event_path(@event) %> |
+  <header>
+    <h1><%= @event.title %></h1>
+  </header>
+
+  <% if @event.image.attached? %>
+    <div class="event-image">
+      <%= image_tag @event.image %>
+    </div>
+  <% end %>
+
+  <section>
+    <%= simple_format(@event.description) %>
+  </section>
+
+  <% if @event.details.present? %>
+    <section>
+      <%= simple_format(@event.details) %>
+    </section>
+  <% end %>
+
+  <dl>
+    <dt>Date</dt>
+    <dd>
+      <%= @event.event_date.strftime("%B %d, %Y") %>
+    </dd>
+
+    <% if @event.start_time.present? %>
+      <dt>Time</dt>
+      <dd>
+        <%= @event.start_time.strftime("%I:%M %p") %>
+      </dd>
+    <% end %>
+
+    <% if @event.location_name.present? %>
+      <dt>Location</dt>
+      <dd>
+        <%= @event.location_name %>
+      </dd>
+    <% end %>
+
+    <% if @event.is_online? && @event.meeting_link.present? %>
+      <dt>Online</dt>
+      <dd>
+        <%= link_to "Join Event", @event.meeting_link %>
+      </dd>
+    <% end %>
+  </dl>
+
   <%= link_to "Back to events", events_path %>
 
-  <%= button_to "Destroy this event", @event, method: :delete %>
-</div>
+</article>

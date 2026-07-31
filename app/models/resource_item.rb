@@ -16,4 +16,16 @@ class ResourceItem < ApplicationRecord
   scope :by_category,->(c) { where(category: c) if c.present? }
   scope :featured,   -> { where(featured: true) }
   scope :ordered,    -> { order(:sort_order, :title) }
+  before_validation :generate_slug, on: :create
+
+  def to_param
+    slug
+  end
+
+  private
+
+  def generate_slug
+    self.slug ||= title.to_s.parameterize
+  end
+
 end

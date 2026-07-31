@@ -1,4 +1,15 @@
 class Current < ActiveSupport::CurrentAttributes
-  attribute :session
-  delegate :user, to: :session, allow_nil: true
+
+  attribute :actor
+  attribute :user
+  attribute :request_id
+
+
+  resets do
+
+    Time.zone = nil
+
+  end
+
+
 end

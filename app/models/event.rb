@@ -1,5 +1,3 @@
-# ── app/models/event.rb ──────────────────────────────────────────
-
 class Event < ApplicationRecord
   has_one_attached :image
   has_many :event_rsvps, dependent: :destroy
@@ -10,16 +8,35 @@ class Event < ApplicationRecord
   validates :event_type, inclusion: { in: TYPES }
 
   scope :upcoming,   -> { where("event_date >= ?", Date.today).order(:event_date) }
-  scope :past,       -> { where("event_date < ?",  Date.today).order(event_date: :desc) }
+  scope :past,       -> { where("event_date < ?", Date.today).order(event_date: :desc) }
   scope :published,  -> { where(published: true) }
   scope :featured,   -> { where(featured: true) }
   scope :by_type,    ->(t) { where(event_type: t) if t.present? }
 
   after_create :notify_subscribers
 
-  def past?     = event_date < Date.today
-  def upcoming? = event_date >= Date.today
-  def rsvp_count = event_rsvps.count
+  after_create_commit :trigger_create_job
+  after_update_commit :trigger_update_job
+  after_destroy_commit :trigger_destroy_job
+
+
+  def to_param
+    slug
+  end
+
+
+  def past?
+    event_date < Date.today
+  end
+
+  def upcoming?
+    event_date >= Date.today
+  end
+
+  def rsvp_count
+    event_rsvps.count
+  end
+
 
   def type_badge_class
     {
@@ -32,10 +49,29 @@ class Event < ApplicationRecord
     }.fetch(event_type, "event-type--education")
   end
 
+
   private
+
 
   def notify_subscribers
     return unless published? && upcoming?
+
     EventNotificationJob.perform_later(id)
   end
+
+
+  def trigger_create_job
+    EventCreateJob.perform_later(id)
+  end
+
+
+  def trigger_update_job
+    EventUpdateJob.perform_later(id)
+  end
+
+
+  def trigger_destroy_job
+    EventDestroyJob.perform_later(id)
+  end
+
 end

@@ -1,0 +1,73 @@
+#!/bin/bash
+
+set -e
+
+echo "Fixing public Event show view..."
+
+VIEW="app/views/events/show.html.erb"
+
+if [ -f "$VIEW" ]; then
+  cp "$VIEW" "${VIEW}.backup"
+  echo "Backup created: ${VIEW}.backup"
+fi
+
+cat > "$VIEW" <<'ERB'
+<% content_for :title, @event.title %>
+
+<article class="event">
+
+  <header>
+    <h1><%= @event.title %></h1>
+  </header>
+
+  <% if @event.image.attached? %>
+    <div class="event-image">
+      <%= image_tag @event.image %>
+    </div>
+  <% end %>
+
+  <section>
+    <%= simple_format(@event.description) %>
+  </section>
+
+  <% if @event.details.present? %>
+    <section>
+      <%= simple_format(@event.details) %>
+    </section>
+  <% end %>
+
+  <dl>
+    <dt>Date</dt>
+    <dd>
+      <%= @event.event_date.strftime("%B %d, %Y") %>
+    </dd>
+
+    <% if @event.start_time.present? %>
+      <dt>Time</dt>
+      <dd>
+        <%= @event.start_time.strftime("%I:%M %p") %>
+      </dd>
+    <% end %>
+
+    <% if @event.location_name.present? %>
+      <dt>Location</dt>
+      <dd>
+        <%= @event.location_name %>
+      </dd>
+    <% end %>
+
+    <% if @event.is_online? && @event.meeting_link.present? %>
+      <dt>Online</dt>
+      <dd>
+        <%= link_to "Join Event", @event.meeting_link %>
+      </dd>
+    <% end %>
+  </dl>
+
+  <%= link_to "Back to events", events_path %>
+
+</article>
+ERB
+
+echo "Event show view updated."
+echo "Backup available at ${VIEW}.backup"
