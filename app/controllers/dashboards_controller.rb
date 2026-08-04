@@ -7,6 +7,8 @@ class DashboardsController < ApplicationController
     @dashboards = Dashboard.all
     @current_user = Current.user
     @users = User.all
+    # Uses the magic scope provided by your enum definition
+  @pending_users = User.pending
   end
 
   # GET /dashboards/1 or /dashboards/1.json

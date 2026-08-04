@@ -355,10 +355,10 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
       <span class="tb-notif-badge">5</span>
     </div>
     <div class="tb-user">
-      <div class="tb-avatar" id="tbAvatar">AD</div>
+      <div class="tb-avatar" id="tbAvatar"><%= "#{@current_user.first_name.to_s.first}#{@current_user.last_name.to_s.first}" %></div>
       <div>
-        <div class="tb-user-name" id="tbName"><%=@current_user.first_name%> <%=@current_user.last_name%></div>
-        <div class="tb-user-role role-admin" id="tbRole"><%=@current_user.role%> · <%=@current_user.title%> </div>
+        <div class="tb-user-name" id="tbName"><%=@current_user&.first_name%> <%=@current_user&.last_name%></div>
+        <div class="tb-user-role role-admin" id="tbRole"><%=@current_user&.role%> · <%=@current_user&.title%> </div>
       </div>
     </div>
   </div>
@@ -463,7 +463,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
     <div class="page-head-left">
       <div class="ph-label">Admin Dashboard</div>
       <div class="ph-title">Mission Control</div>
-      <div class="ph-sub">Good morning, Ashley. Here's where the coalition stands today.</div>
+      <div class="ph-sub">Good morning, <%=@current_user.first_name%>. Here's where the coalition stands today.</div>
     </div>
     <div style="display:flex;gap:.6rem;flex-wrap:wrap">
       <button class="btn btn-outline btn-sm">↗ View Live Site</button>
@@ -581,7 +581,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
     <div class="page-head-left">
       <div class="ph-label">Coalition Management</div>
       <div class="ph-title">Members</div>
-      <div class="ph-sub">248 active members · 12 pending approval</div>
+      <div class="ph-sub"><%=@users.count%> active members · <%=@pending_users.count%> pending approval</div>
     </div>
     <div style="display:flex;gap:.6rem">
       <button class="btn btn-ghost btn-sm">↓ Export CSV</button>
@@ -606,7 +606,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
       <option>Social Media</option>
       <option>Journalism</option>
     </select>
-    <span class="tag tag-pending" style="margin-left:auto">12 Pending Review</span>
+    <span class="tag tag-pending" style="margin-left:auto"><%=@pending_users.count%> Pending Review</span>
   </div>
 
   <div class="card" style="padding:0">
@@ -630,7 +630,11 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
           <td><div class="skills-list"><span class="skill-tag">Organizing</span><span class="skill-tag">Advocacy</span></div></td>
           <td style="font-family:var(--fm);font-size:.68rem;color:var(--text-muted)">Founder</td>
           <td style="font-family:var(--fd);font-size:.85rem;font-weight:700;color:var(--cream)">All</td>
-          <td><span class="tag tag-active">Active</span></td>
+          <%if user&.status == "active"%>
+          <td><span class="tag tag-active"><%=user&.status%></span></td>
+          <%else%>
+          <td><span class="tag tag-pending"><%=user&.status%></span></td>
+          <%end%>
           <td><button class="btn btn-ghost btn-sm">Edit</button></td>
         </tr>
         <%end%>
@@ -1164,9 +1168,9 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 ══════════════════════════════════════ -->
 <div id="panel-m-home" class="panel">
   <div class="member-hero">
-    <div class="mh-avatar">KM</div>
+    <div class="mh-avatar"><%= "#{@current_user.first_name.to_s.first}#{@current_user.last_name.to_s.first}" %></div>
     <div>
-      <div class="mh-name">Keisha Morales</div>
+      <div class="mh-name"><%=@current_user.first_name%> <%=@current_user.last_name%></div>
       <div class="mh-role">▪ Active Member · YBNC Vallejo</div>
       <div class="mh-since">Member since March 2026 · "Named by the unnamed."</div>
     </div>
@@ -1432,20 +1436,20 @@ function setView(view, btn) {
     adminNav.style.display  = 'block';
     memberNav.style.display = 'none';
     // Reset avatar/role
-    document.getElementById('tbAvatar').textContent     = 'AD';
-    document.getElementById('tbName').textContent       = 'Ashley Dorelus';
-    document.getElementById('tbRole').className         = 'tb-user-role role-admin';
-    document.getElementById('tbRole').textContent       = 'Admin · Founder';
+    document.getElementById('tbAvatar').textContent     = '<%= "#{@current_user.first_name.to_s.first}#{@current_user.last_name.to_s.first}" %>';
+    document.getElementById('tbName').textContent       = "<%= @current_user.first_name %> <%= @current_user.last_name %>";
+    document.getElementById('tbRole').className         = '<%= @current_user.role %>';
+    document.getElementById('tbRole').textContent       = '<%= @current_user.title %>';
     // Show first admin panel
     goPanel('overview', adminNav.querySelector('.nav-item'));
   } else {
     adminNav.style.display  = 'none';
     memberNav.style.display = 'block';
     // Switch to member persona
-    document.getElementById('tbAvatar').textContent     = 'KM';
-    document.getElementById('tbName').textContent       = 'Keisha Morales';
+    document.getElementById('tbAvatar').textContent     = '<%= "#{@current_user.first_name.to_s.first}#{@current_user.last_name.to_s.first}" %>';
+    document.getElementById('tbName').textContent       = "<%= @current_user.first_name %> <%= @current_user.last_name %>";
     document.getElementById('tbRole').className         = 'tb-user-role role-member';
-    document.getElementById('tbRole').textContent       = 'Member · Vallejo';
+    document.getElementById('tbRole').textContent       = '<%= @current_user.role %> · Vallejo';
     // Show first member panel
     goPanel('m-home', memberNav.querySelector('.nav-item'));
   }

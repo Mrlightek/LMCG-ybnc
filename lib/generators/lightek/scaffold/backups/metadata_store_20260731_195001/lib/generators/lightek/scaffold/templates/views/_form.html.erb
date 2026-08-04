@@ -1,0 +1,34 @@
+<%%= form_with(model: <%= file_name %>) do |form| %>
+
+  <% attributes.each do |attribute| %>
+
+    <div>
+
+      <%%= form.label :<%= attribute.name %> %>
+
+      <%%= form.<%= 
+        case attribute.type.to_sym
+        when :text
+          "text_area"
+        when :boolean
+          "check_box"
+        when :integer, :decimal
+          "number_field"
+        else
+          "text_field"
+        end
+      %> :<%= attribute.name %> %>
+
+    </div>
+
+  <% end %>
+
+
+  <div>
+
+    <%%= form.submit %>
+
+  </div>
+
+
+<%% end %>

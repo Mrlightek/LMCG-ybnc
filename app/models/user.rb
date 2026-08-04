@@ -3,13 +3,16 @@ class User < ApplicationRecord
   has_many :sessions, dependent: :destroy
   has_many :skills
   enum :role, { member: 0, admin: 1 }
+  # Defines 0 as pending, 1 as active, etc.
+  enum :status, { pending: 0, active: 1, archived: 2 }, default: :pending
+
 
   normalizes :email_address, with: ->(e) { e.strip.downcase }
 
 
-  after_create_commit :trigger_create_job
+  #after_create_commit :trigger_create_job
   after_update_commit :trigger_update_job
-  after_destroy_commit :trigger_destroy_job
+  #after_destroy_commit :trigger_destroy_job
 
 
   private

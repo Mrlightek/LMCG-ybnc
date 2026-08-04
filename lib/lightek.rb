@@ -27,6 +27,8 @@ require_relative "lightek/upgrades/result"
 require_relative "lightek/upgrades/executor"
 require_relative "lightek/upgrades/handler"
 require_relative "lightek/upgrades/loader"
+require_relative "lightek/upgrades/state"
+require_relative "lightek/upgrades/metadata"
 require_relative "lightek/upgrades/history"
 require_relative "lightek/upgrades/verifier"
 
